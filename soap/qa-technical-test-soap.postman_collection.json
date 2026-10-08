@@ -18,7 +18,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "// 1. Escribir un test para verificar que el estado de la respuesta es 200 OK.\r\npm.test(\"Status code es 200 OK\", function () {\r\n    pm.response.to.have.status(200);\r\n});"
+                  "// 1. Validar status code 200.\r\npm.test(\"Status code es 200 OK\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n\r\n// 2. Validar que el cuerpo de la respuesta es XML.\r\npm.test(\"La respuesta es XML\", function () {\r\n    pm.expect(pm.response.headers.get(\"content-type\")).to.include(\"xml\");\r\n});\r\n\r\n// 3. Validar que AddResult es exactamente 8 (5 + 3).\r\npm.test(\"AddResult es 8 (5 + 3)\", function () {\r\n    const xmlBody = pm.response.text();\r\n    const addResultMatch = xmlBody.match(/<AddResult>(\\d+)<\\/AddResult>/);\r\n    pm.expect(addResultMatch, \"AddResult debe existir en la respuesta\").to.not.be.null;\r\n    pm.expect(parseInt(addResultMatch[1]), \"AddResult debe ser 8\").to.eql(8);\r\n});\r\n\r\n// 4. Validar que la respuesta contiene el namespace correcto.\r\npm.test(\"Response contiene namespace tempuri.org\", function () {\r\n    const xmlBody = pm.response.text();\r\n    pm.expect(xmlBody).to.include(\"http://tempuri.org/\");\r\n});"
                 ]
               }
             }
@@ -623,6 +623,64 @@
               ],
               "cookie": [],
               "body": "<?xml version=\"1.0\" encoding=\"utf-8\"?><soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"><soap:Body><SubtractResponse xmlns=\"http://tempuri.org/\"><SubtractResult>8</SubtractResult></SubtractResponse></soap:Body></soap:Envelope>"
+            }
+          ]
+        },
+        {
+          "name": "divide-invalid",
+          "description": "Caso invalido: Division por cero. El servicio debe devolver faultstring indicando que no se puede dividir por cero.",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// 1. Validar que el servicio responde (puede ser 200 con fault o 500).\r\npm.test(\"El servicio responde con status 200 o 500\", function () {\r\n    pm.expect(pm.response.code).to.be.oneOf([200, 500]);\r\n});\r\n\r\n// 2. Validar que la respuesta contiene faultstring (division por cero).\r\npm.test(\"La respuesta contiene faultstring de division por cero\", function () {\r\n    const xmlBody = pm.response.text();\r\n    const hasFault = xmlBody.includes(\"faultstring\") || xmlBody.includes(\"DivideByZero\");\r\n    pm.expect(hasFault, \"Debe contener faultstring\").to.be.true;\r\n});\r\n\r\n// 3. Validar que NO se devuelve un resultado numerico (error esperado).\r\npm.test(\"No se devuelve DivideResult en caso de error\", function () {\r\n    const xmlBody = pm.response.text();\r\n    const divideResultMatch = xmlBody.match(/<DivideResult>(\\d+)<\\/DivideResult>/);\r\n    pm.expect(divideResultMatch, \"No debe devolver DivideResult en division por cero\").to.be.null;\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "text/xml; charset=utf-8"
+              },
+              {
+                "key": "SOAPAction",
+                "value": "\"http://tempuri.org/Divide\""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n  <soap:Body>\r\n    <Divide xmlns=\"http://tempuri.org/\">\r\n      <intA>10</intA>\r\n      <intB>0</intB>\r\n    </Divide>\r\n  </soap:Body>\r\n</soap:Envelope>",
+              "options": {
+                "raw": {
+                  "language": "xml"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://www.dneonline.com/calculator.asmx",
+              "protocol": "http",
+              "host": [
+                "www",
+                "dneonline",
+                "com"
+              ],
+              "path": [
+                "calculator.asmx"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "divide-by-zero",
+              "_postman_previewlanguage": "xml",
+              "code": 200,
+              "status": "OK",
+              "body": "<?xml version=\"1.0\" encoding=\"utf-8\"?><soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"><soap:Body><soap:Fault><faultcode>soap:Server</faultcode><faultstring>Attempted to divide by zero.</faultstring></soap:Fault></soap:Body></soap:Envelope>"
             }
           ]
         }

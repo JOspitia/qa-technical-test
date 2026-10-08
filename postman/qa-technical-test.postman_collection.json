@@ -16,7 +16,7 @@
               "listen": "test",
               "script": {
                 "exec": [
-                  "// 1. Validar el status code de la respuesta.\npm.test(\"Status code es 200\", function () {\n    pm.response.to.have.status(200);\n});\n\n// 2. Validar la existencia del token y guardarlo\npm.test(\"El accessToken existe y fue guardado\", function () {\n    const jsonData = pm.response.json();\n    pm.expect(jsonData).to.have.property(\"accessToken\"); \n    pm.expect(jsonData.accessToken).to.exist;\n    pm.collectionVariables.set(\"accessToken\", jsonData.accessToken);\n    console.log(\"accessToken guardado:\", jsonData.accessToken);\n});\n\n// 3. Validar la existencia del refresh token y guardarlo\npm.test(\"El refreshToken existe y fue guardado\", function () {\n    const jsonData = pm.response.json();\n    pm.expect(jsonData).to.have.property(\"refreshToken\"); \n    pm.expect(jsonData.refreshToken).to.exist;\n    pm.collectionVariables.set(\"refreshToken\", jsonData.refreshToken);\n    console.log(\"refreshToken guardado:\", jsonData.refreshToken);\n});"
+                  "// 1. Validar status code 200.\npm.test(\"Status code es 200\", function () {\n    pm.response.to.have.status(200);\n});\n\n// 2. Validar que accessToken no sea vacio ni null.\npm.test(\"accessToken existe, es string y no esta vacio\", function () {\n    const jsonData = pm.response.json();\n    pm.expect(jsonData).to.have.property(\"accessToken\");\n    pm.expect(jsonData.accessToken, \"accessToken debe ser string\").to.be.a(\"string\");\n    pm.expect(jsonData.accessToken.length, \"accessToken debe tener contenido\").to.be.greaterThan(0);\n    pm.collectionVariables.set(\"accessToken\", jsonData.accessToken);\n});\n\n// 3. Validar que refreshToken no sea vacio.\npm.test(\"refreshToken existe y no esta vacio\", function () {\n    const jsonData = pm.response.json();\n    pm.expect(jsonData).to.have.property(\"refreshToken\");\n    pm.expect(jsonData.refreshToken, \"refreshToken debe ser string\").to.be.a(\"string\");\n    pm.expect(jsonData.refreshToken.length, \"refreshToken debe tener contenido\").to.be.greaterThan(0);\n    pm.collectionVariables.set(\"refreshToken\", jsonData.refreshToken);\n});\n\n// 4. Validar estructura del perfil de usuario.\npm.test(\"Perfil de usuario tiene campos obligatorios\", function () {\n    const jsonData = pm.response.json();\n    pm.expect(jsonData).to.have.property(\"id\");\n    pm.expect(jsonData).to.have.property(\"username\");\n    pm.expect(jsonData).to.have.property(\"email\");\n    pm.expect(jsonData).to.have.property(\"firstName\");\n    pm.expect(jsonData).to.have.property(\"lastName\");\n});"
                 ],
                 "type": "text/javascript"
               }
@@ -312,6 +312,60 @@
               "status": "OK"
             }
           ]
+        },
+        {
+          "name": "auth-login-failed",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// 1. Validar que el status code sea 400 para credenciales invalidas.\npm.test(\"Status code es 400 para credenciales invalidas\", function () {\n    pm.response.to.have.status(400);\n});\n\n// 2. Validar que el mensaje de error sea el esperado.\npm.test(\"Mensaje de error 'Invalid credentials'\", function () {\n    const jsonData = pm.response.json();\n    pm.expect(jsonData).to.have.property(\"message\");\n    pm.expect(jsonData.message, \"Mensaje debe ser 'Invalid credentials'\").to.eql(\"Invalid credentials\");\n});\n\n// 3. Verificar que NO se devuelva accessToken.\npm.test(\"No se devuelve accessToken con credenciales invalidas\", function () {\n    const jsonData = pm.response.json();\n    pm.expect(jsonData).to.not.have.property(\"accessToken\");\n});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "body": {
+              "mode": "raw",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              },
+              "raw": "{\r\n    \"username\": \"emilys\",\r\n    \"password\": \"wrongpassword\"\r\n}"
+            },
+            "description": "Prueba de login fallido con credenciales invalidas",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "url": {
+              "host": [
+                "dummyjson",
+                "com"
+              ],
+              "path": [
+                "auth",
+                "login"
+              ],
+              "protocol": "https",
+              "raw": "https://dummyjson.com/auth/login"
+            }
+          },
+          "response": [
+            {
+              "name": "status-400",
+              "_postman_previewlanguage": "json",
+              "body": "{\n  \"message\": \"Invalid credentials\"\n}",
+              "code": 400,
+              "status": "OK"
+            }
+          ]
         }
       ],
       "name": "auth"
@@ -321,6 +375,17 @@
       "item": [
         {
           "name": "products",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// 1. Validar status code 200.\npm.test(\"Status code es 200\", function () {\n    pm.response.to.have.status(200);\n});\n\n// 2. Validar que la respuesta contenga un arreglo de productos.\npm.test(\"La respuesta contiene un arreglo 'products'\", function () {\n    const jsonData = pm.response.json();\n    pm.expect(jsonData).to.have.property(\"products\");\n    pm.expect(jsonData.products, \"products debe ser un arreglo\").to.be.an(\"array\");\n});\n\n// 3. Validar que el arreglo de productos no este vacio.\npm.test(\"El arreglo de productos tiene al menos un elemento\", function () {\n    const jsonData = pm.response.json();\n    pm.expect(jsonData.products.length, \"Debe haber al menos 1 producto\").to.be.greaterThan(0);\n});\n\n// 4. Validar estructura del primer producto.\npm.test(\"El primer producto tiene campos obligatorios\", function () {\n    const jsonData = pm.response.json();\n    const producto = jsonData.products[0];\n    pm.expect(producto).to.have.property(\"id\");\n    pm.expect(producto).to.have.property(\"title\");\n    pm.expect(producto).to.have.property(\"price\");\n    pm.expect(producto).to.have.property(\"category\");\n    pm.expect(producto).to.have.property(\"stock\");\n});\n\n// 5. Validar que el precio sea numerico.\npm.test(\"El campo price es numerico\", function () {\n    const jsonData = pm.response.json();\n    const producto = jsonData.products[0];\n    pm.expect(producto.price, \"price debe ser numerico\").to.be.a(\"number\");\n});\n\n// 6. Validar parametros de paginacion.\npm.test(\"La respuesta contiene parametros de paginacion\", function () {\n    const jsonData = pm.response.json();\n    pm.expect(jsonData).to.have.property(\"total\");\n    pm.expect(jsonData).to.have.property(\"skip\");\n    pm.expect(jsonData).to.have.property(\"limit\");\n});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
           "request": {
             "auth": {
               "bearer": [
