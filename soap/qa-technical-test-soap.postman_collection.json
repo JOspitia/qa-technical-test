@@ -1,0 +1,632 @@
+{
+  "info": {
+    "_postman_id": "4284fe90-02b6-46e8-9465-b8a51d96cdec",
+    "name": "qa-technical-test-soap",
+    "description": "URL: [http://www.dneonline.com/calculator.asmx](http://www.dneonline.com/calculator.asmx)\n\nThe following operations are supported. For a formal definition, please review the [Service Description](http://www.dneonline.com/calculator.asmx?WSDL).\n\n- [Add](http://www.dneonline.com/calculator.asmx?op=Add)\n    \n- [Divide](http://www.dneonline.com/calculator.asmx?op=Divide)\n    \n- [Multiply](http://www.dneonline.com/calculator.asmx?op=Multiply)\n    \n- [Subtract](http://www.dneonline.com/calculator.asmx?op=Subtract)\n    \n\nThis web service is using [http://tempuri.org/](http://tempuri.org/) as its default namespace.\n\nRecommendation: Change the default namespace before the XML Web service is made public.  \nEach XML Web service needs a unique namespace in order for client applications to distinguish it from other services on the Web. [http://tempuri.org/](http://tempuri.org/) is available for XML Web services that are under development, but published XML Web services should use a more permanent namespace.\n\nYour XML Web service should be identified by a namespace that you control. For example, you can use your company's Internet domain name as part of the namespace. Although many XML Web service namespaces look like URLs, they need not point to actual resources on the Web. (XML Web service namespaces are URIs.)\n\nFor XML Web services creating using ASP.NET, the default namespace can be changed using the WebService attribute's Namespace property. The WebService attribute is an attribute applied to the class that contains the XML Web service methods. Below is a code example that sets the namespace to \"[http://microsoft.com/webservices/](http://microsoft.com/webservices/)\"",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "25334167"
+  },
+  "item": [
+    {
+      "name": "calculator",
+      "item": [
+        {
+          "name": "add",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// 1. Escribir un test para verificar que el estado de la respuesta es 200 OK.\r\npm.test(\"Status code es 200 OK\", function () {\r\n    pm.response.to.have.status(200);\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Host",
+                "value": "www.dneonline.com",
+                "disabled": true
+              },
+              {
+                "key": "Content-Type",
+                "value": "text/xml; charset=utf-8"
+              },
+              {
+                "key": "Content-Length",
+                "value": "length",
+                "disabled": true
+              },
+              {
+                "key": "SOAPAction",
+                "value": "\"http://tempuri.org/Add\""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <soap:Body>\r\n        <Add xmlns=\"http://tempuri.org/\">\r\n            <intA>5</intA>\r\n            <intB>3</intB>\r\n        </Add>\r\n    </soap:Body>\r\n</soap:Envelope>",
+              "options": {
+                "raw": {
+                  "language": "xml"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://www.dneonline.com/calculator.asmx",
+              "protocol": "http",
+              "host": [
+                "www",
+                "dneonline",
+                "com"
+              ],
+              "path": [
+                "calculator.asmx"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "result",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Host",
+                    "value": "www.dneonline.com",
+                    "disabled": true
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "text/xml; charset=utf-8"
+                  },
+                  {
+                    "key": "Content-Length",
+                    "value": "length",
+                    "disabled": true
+                  },
+                  {
+                    "key": "SOAPAction",
+                    "value": "\"http://tempuri.org/Add\""
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <soap:Body>\r\n        <Add xmlns=\"http://tempuri.org/\">\r\n            <intA>5</intA>\r\n            <intB>3</intB>\r\n        </Add>\r\n    </soap:Body>\r\n</soap:Envelope>",
+                  "options": {
+                    "raw": {
+                      "language": "xml"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://www.dneonline.com/calculator.asmx",
+                  "protocol": "http",
+                  "host": [
+                    "www",
+                    "dneonline",
+                    "com"
+                  ],
+                  "path": [
+                    "calculator.asmx"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "xml",
+              "header": [
+                {
+                  "key": "cache-control",
+                  "value": "private, max-age=0"
+                },
+                {
+                  "key": "content-type",
+                  "value": "text/xml; charset=utf-8"
+                },
+                {
+                  "key": "content-encoding",
+                  "value": "br"
+                },
+                {
+                  "key": "vary",
+                  "value": "Accept-Encoding"
+                },
+                {
+                  "key": "server",
+                  "value": "Microsoft-IIS/10.0"
+                },
+                {
+                  "key": "x-aspnet-version",
+                  "value": "2.0.50727"
+                },
+                {
+                  "key": "x-powered-by",
+                  "value": "ASP.NET"
+                },
+                {
+                  "key": "x-powered-by-plesk",
+                  "value": "PleskWin"
+                },
+                {
+                  "key": "date",
+                  "value": "Thu, 08 Oct 2026 03:41:41 GMT"
+                },
+                {
+                  "key": "content-length",
+                  "value": "262"
+                }
+              ],
+              "cookie": [],
+              "body": "<?xml version=\"1.0\" encoding=\"utf-8\"?><soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"><soap:Body><AddResponse xmlns=\"http://tempuri.org/\"><AddResult>8</AddResult></AddResponse></soap:Body></soap:Envelope>"
+            }
+          ]
+        },
+        {
+          "name": "divide",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// 1. Escribir un test para verificar que el estado de la respuesta es 200 OK.\r\npm.test(\"Status code es 200 OK\", function () {\r\n    pm.response.to.have.status(200);\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Host",
+                "value": "www.dneonline.com",
+                "disabled": true
+              },
+              {
+                "key": "Content-Type",
+                "value": "text/xml; charset=utf-8"
+              },
+              {
+                "key": "Content-Length",
+                "value": "length",
+                "disabled": true
+              },
+              {
+                "key": "SOAPAction",
+                "value": "\"http://tempuri.org/Divide\""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n  <soap:Body>\r\n    <Divide xmlns=\"http://tempuri.org/\">\r\n      <intA>50</intA>\r\n      <intB>12</intB>\r\n    </Divide>\r\n  </soap:Body>\r\n</soap:Envelope>",
+              "options": {
+                "raw": {
+                  "language": "xml"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://www.dneonline.com/calculator.asmx",
+              "protocol": "http",
+              "host": [
+                "www",
+                "dneonline",
+                "com"
+              ],
+              "path": [
+                "calculator.asmx"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "result",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Host",
+                    "value": "www.dneonline.com",
+                    "disabled": true
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "text/xml; charset=utf-8"
+                  },
+                  {
+                    "key": "Content-Length",
+                    "value": "length",
+                    "disabled": true
+                  },
+                  {
+                    "key": "SOAPAction",
+                    "value": "\"http://tempuri.org/Divide\""
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n  <soap:Body>\r\n    <Divide xmlns=\"http://tempuri.org/\">\r\n      <intA>50</intA>\r\n      <intB>12</intB>\r\n    </Divide>\r\n  </soap:Body>\r\n</soap:Envelope>",
+                  "options": {
+                    "raw": {
+                      "language": "xml"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://www.dneonline.com/calculator.asmx",
+                  "protocol": "http",
+                  "host": [
+                    "www",
+                    "dneonline",
+                    "com"
+                  ],
+                  "path": [
+                    "calculator.asmx"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "xml",
+              "header": [
+                {
+                  "key": "cache-control",
+                  "value": "private, max-age=0"
+                },
+                {
+                  "key": "content-type",
+                  "value": "text/xml; charset=utf-8"
+                },
+                {
+                  "key": "content-encoding",
+                  "value": "br"
+                },
+                {
+                  "key": "vary",
+                  "value": "Accept-Encoding"
+                },
+                {
+                  "key": "server",
+                  "value": "Microsoft-IIS/10.0"
+                },
+                {
+                  "key": "x-aspnet-version",
+                  "value": "2.0.50727"
+                },
+                {
+                  "key": "x-powered-by",
+                  "value": "ASP.NET"
+                },
+                {
+                  "key": "x-powered-by-plesk",
+                  "value": "PleskWin"
+                },
+                {
+                  "key": "date",
+                  "value": "Thu, 08 Oct 2026 03:45:20 GMT"
+                },
+                {
+                  "key": "content-length",
+                  "value": "264"
+                }
+              ],
+              "cookie": [],
+              "body": "<?xml version=\"1.0\" encoding=\"utf-8\"?><soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"><soap:Body><DivideResponse xmlns=\"http://tempuri.org/\"><DivideResult>4</DivideResult></DivideResponse></soap:Body></soap:Envelope>"
+            }
+          ]
+        },
+        {
+          "name": "multiply",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// 1. Escribir un test para verificar que el estado de la respuesta es 200 OK.\r\npm.test(\"Status code es 200 OK\", function () {\r\n    pm.response.to.have.status(200);\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Host",
+                "value": "www.dneonline.com",
+                "disabled": true
+              },
+              {
+                "key": "Content-Type",
+                "value": "text/xml; charset=utf-8"
+              },
+              {
+                "key": "Content-Length",
+                "value": "length",
+                "disabled": true
+              },
+              {
+                "key": "SOAPAction",
+                "value": "\"http://tempuri.org/Multiply\""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n  <soap:Body>\r\n    <Multiply xmlns=\"http://tempuri.org/\">\r\n      <intA>2</intA>\r\n      <intB>5</intB>\r\n    </Multiply>\r\n  </soap:Body>\r\n</soap:Envelope>",
+              "options": {
+                "raw": {
+                  "language": "xml"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://www.dneonline.com/calculator.asmx",
+              "protocol": "http",
+              "host": [
+                "www",
+                "dneonline",
+                "com"
+              ],
+              "path": [
+                "calculator.asmx"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "result",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Host",
+                    "value": "www.dneonline.com",
+                    "disabled": true
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "text/xml; charset=utf-8"
+                  },
+                  {
+                    "key": "Content-Length",
+                    "value": "length",
+                    "disabled": true
+                  },
+                  {
+                    "key": "SOAPAction",
+                    "value": "\"http://tempuri.org/Multiply\""
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n  <soap:Body>\r\n    <Multiply xmlns=\"http://tempuri.org/\">\r\n      <intA>2</intA>\r\n      <intB>5</intB>\r\n    </Multiply>\r\n  </soap:Body>\r\n</soap:Envelope>",
+                  "options": {
+                    "raw": {
+                      "language": "xml"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://www.dneonline.com/calculator.asmx",
+                  "protocol": "http",
+                  "host": [
+                    "www",
+                    "dneonline",
+                    "com"
+                  ],
+                  "path": [
+                    "calculator.asmx"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "xml",
+              "header": [
+                {
+                  "key": "cache-control",
+                  "value": "private, max-age=0"
+                },
+                {
+                  "key": "content-type",
+                  "value": "text/xml; charset=utf-8"
+                },
+                {
+                  "key": "content-encoding",
+                  "value": "br"
+                },
+                {
+                  "key": "vary",
+                  "value": "Accept-Encoding"
+                },
+                {
+                  "key": "server",
+                  "value": "Microsoft-IIS/10.0"
+                },
+                {
+                  "key": "x-aspnet-version",
+                  "value": "2.0.50727"
+                },
+                {
+                  "key": "x-powered-by",
+                  "value": "ASP.NET"
+                },
+                {
+                  "key": "x-powered-by-plesk",
+                  "value": "PleskWin"
+                },
+                {
+                  "key": "date",
+                  "value": "Thu, 08 Oct 2026 03:46:42 GMT"
+                },
+                {
+                  "key": "content-length",
+                  "value": "266"
+                }
+              ],
+              "cookie": [],
+              "body": "<?xml version=\"1.0\" encoding=\"utf-8\"?><soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"><soap:Body><MultiplyResponse xmlns=\"http://tempuri.org/\"><MultiplyResult>10</MultiplyResult></MultiplyResponse></soap:Body></soap:Envelope>"
+            }
+          ]
+        },
+        {
+          "name": "subtract",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// 1. Escribir un test para verificar que el estado de la respuesta es 200 OK.\r\npm.test(\"Status code es 200 OK\", function () {\r\n    pm.response.to.have.status(200);\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Host",
+                "value": "www.dneonline.com",
+                "disabled": true
+              },
+              {
+                "key": "Content-Type",
+                "value": "text/xml; charset=utf-8"
+              },
+              {
+                "key": "Content-Length",
+                "value": "length",
+                "disabled": true
+              },
+              {
+                "key": "SOAPAction",
+                "value": "\"http://tempuri.org/Subtract\""
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n  <soap:Body>\r\n    <Subtract xmlns=\"http://tempuri.org/\">\r\n      <intA>10</intA>\r\n      <intB>2</intB>\r\n    </Subtract>\r\n  </soap:Body>\r\n</soap:Envelope>",
+              "options": {
+                "raw": {
+                  "language": "xml"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://www.dneonline.com/calculator.asmx",
+              "protocol": "http",
+              "host": [
+                "www",
+                "dneonline",
+                "com"
+              ],
+              "path": [
+                "calculator.asmx"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "result",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Host",
+                    "value": "www.dneonline.com",
+                    "disabled": true
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "text/xml; charset=utf-8"
+                  },
+                  {
+                    "key": "Content-Length",
+                    "value": "length",
+                    "disabled": true
+                  },
+                  {
+                    "key": "SOAPAction",
+                    "value": "\"http://tempuri.org/Subtract\""
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n  <soap:Body>\r\n    <Subtract xmlns=\"http://tempuri.org/\">\r\n      <intA>10</intA>\r\n      <intB>2</intB>\r\n    </Subtract>\r\n  </soap:Body>\r\n</soap:Envelope>",
+                  "options": {
+                    "raw": {
+                      "language": "xml"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://www.dneonline.com/calculator.asmx",
+                  "protocol": "http",
+                  "host": [
+                    "www",
+                    "dneonline",
+                    "com"
+                  ],
+                  "path": [
+                    "calculator.asmx"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "xml",
+              "header": [
+                {
+                  "key": "cache-control",
+                  "value": "private, max-age=0"
+                },
+                {
+                  "key": "content-type",
+                  "value": "text/xml; charset=utf-8"
+                },
+                {
+                  "key": "content-encoding",
+                  "value": "br"
+                },
+                {
+                  "key": "vary",
+                  "value": "Accept-Encoding"
+                },
+                {
+                  "key": "server",
+                  "value": "Microsoft-IIS/10.0"
+                },
+                {
+                  "key": "x-aspnet-version",
+                  "value": "2.0.50727"
+                },
+                {
+                  "key": "x-powered-by",
+                  "value": "ASP.NET"
+                },
+                {
+                  "key": "x-powered-by-plesk",
+                  "value": "PleskWin"
+                },
+                {
+                  "key": "date",
+                  "value": "Thu, 08 Oct 2026 03:48:40 GMT"
+                },
+                {
+                  "key": "content-length",
+                  "value": "266"
+                }
+              ],
+              "cookie": [],
+              "body": "<?xml version=\"1.0\" encoding=\"utf-8\"?><soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"><soap:Body><SubtractResponse xmlns=\"http://tempuri.org/\"><SubtractResult>8</SubtractResult></SubtractResponse></soap:Body></soap:Envelope>"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

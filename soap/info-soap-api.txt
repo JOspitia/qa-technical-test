@@ -1,0 +1,9 @@
+URL: http://www.dneonline.com/calculator.asmx
+
+
+The following operations are supported. For a formal definition, please review the http://www.dneonline.com/calculator.asmx?WSDL
+
+Add: http://www.dneonline.com/calculator.asmx?op=Add
+Divide: http://www.dneonline.com/calculator.asmx?op=Divide
+Multiply: http://www.dneonline.com/calculator.asmx?op=Multiply
+Subtract: http://www.dneonline.com/calculator.asmx?op=Subtract
