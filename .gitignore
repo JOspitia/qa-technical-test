@@ -1,0 +1,32 @@
+# Dependencias
+node_modules/
+
+# Resultados de ejecucion
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+screenshots/
+videos/
+
+# Archivos de evidencia generados en cada ejecucion
+playwright-tests/screenshots/
+playwright-tests/videos/
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editores
+.vscode/
+.idea/
+*.swp
+
+# Postman: estado local de la app de escritorio (ajeno al entregable)
+.postman/
+
+# Entornos de Postman: pueden contener credenciales reales.
+# Este proyecto no versiona entornos. Si se necesita uno sin secretos:
+# git add -f entorno.postman_environment.json
+*.postman_environment.json
