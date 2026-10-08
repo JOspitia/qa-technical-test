@@ -1,0 +1,127 @@
+Solicitud de autenticación (login)
+
+REQUEST:
+    -Operation: auth login
+    -Endpoint: https://dummyjson.com/auth/login
+    -Method: POST
+    -Content-Type: application/json
+    -Body:
+        {
+            "username": "{{username}}",
+            "password": "{{password}}"
+        }
+
+RESPONSE:
+    -code: 200
+    -body:
+        {
+            "accessToken": "{{accessToken}}",
+            "refreshToken": "{{refreshToken}}",
+            "id": "{{id}}",
+            "username": "{{username}}",
+            "email": "{{email}}",
+            "firstName": "{{firstName}}",
+            "lastName": "{{lastName}}",
+            "gender": "{{gender}}",
+            "image": "{{image}}"
+        }
+    
+Solicitud de autenticación con credenciales invalidas
+
+REQUEST:
+    -Operation: auth login
+    -Endpoint: https://dummyjson.com/auth/login
+    -Method: POST
+    -Content-Type: application/json
+    -Body:
+        {
+            "username": "{{username}}",
+            "password": "{{password}}"
+        }
+
+RESPONSE:
+    -code: 400
+    -body: 
+        {
+            "message": "Invalid credentials"
+        }
+
+
+Solicitud de productos
+
+REQUEST:
+    -Operation: products
+    -Endpoint: https://dummyjson.com/products
+    -Method: GET
+
+RESPONSE:
+    -code: 200
+    -body: 
+        {
+            "products": [
+                {
+                    "id": {{id}},
+                    "title": "{{title}}",
+                    "description": "{{description}}",
+                    "category": "{{category}}",
+                    "price": {{price}},
+                    "discountPercentage": {{discountPercentage}},
+                    "rating": {{rating}},
+                    "stock": {{stock}},
+                    "tags": [
+                        {{tag1}},
+                        "{{tag2}}"
+                    ],
+                    "brand": {{brand}},
+                    "sku": {{sku}},
+                    "weight": {{weight}},
+                    "dimensions": {
+                        "width": {{width}},
+                        "height": {{height}},
+                        "depth": {{depth}}
+                    },
+                    "warrantyInformation": {{warrantyInformation}},
+                    "shippingInformation": {{shippingInformation}},
+                    "availabilityStatus": {{availabilityStatus}},
+                    "reviews": [
+                        {
+                            "rating": {{rating}},
+                            "comment": "{{comment}}",
+                            "date": "{{date}}",
+                            "reviewerName": "{{reviewerName}}",
+                            "reviewerEmail": "{{reviewerEmail}}"
+                        },
+                        {
+                            "rating": {{rating}},
+                            "comment": "{{comment}}",
+                            "date": "{{date}}",
+                            "reviewerName": "{{reviewerName}}",
+                            "reviewerEmail": "{{reviewerEmail}}"
+                        },
+                        {
+                            "rating": {{rating}},
+                            "comment": "{{comment}}",
+                            "date": "{{date}}",
+                            "reviewerName": "{{reviewerName}}",
+                            "reviewerEmail": "{{reviewerEmail}}"
+                        }
+                    ],
+                    "returnPolicy": {{returnPolicy}},
+                    "minimumOrderQuantity": {{minimumOrderQuantity}},
+                    "meta": {
+                        "createdAt": {{createdAt}},
+                        "updatedAt": {{updatedAt}}, 
+                        "barcode": "{{barcode}}",
+                        "qrCode": "{{qrCode}}"
+                    },
+                    "images": [
+                        "{{image}}"
+                    ],
+                    "thumbnail": "{{thumbnail}}"
+                },                
+            ],
+            "total": 194,
+            "skip": 0,
+            "limit": 30
+        }
+        
