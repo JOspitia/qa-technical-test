@@ -628,14 +628,14 @@
         },
         {
           "name": "divide-invalid",
-          "description": "Caso invalido: Division por cero. El servicio debe devolver faultstring indicando que no se puede dividir por cero.",
+          "description": "Caso invalido: Division por cero. El servicio real devuelve HTTP 500 con faultstring 'Arithmetic operation resulted in an overflow' (NO 'divide by zero'). Respuesta verificada contra el servicio en vivo.",
           "event": [
             {
               "listen": "test",
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "// 1. Validar que el servicio responde (puede ser 200 con fault o 500).\r\npm.test(\"El servicio responde con status 200 o 500\", function () {\r\n    pm.expect(pm.response.code).to.be.oneOf([200, 500]);\r\n});\r\n\r\n// 2. Validar que la respuesta contiene faultstring (division por cero).\r\npm.test(\"La respuesta contiene faultstring de division por cero\", function () {\r\n    const xmlBody = pm.response.text();\r\n    const hasFault = xmlBody.includes(\"faultstring\") || xmlBody.includes(\"DivideByZero\");\r\n    pm.expect(hasFault, \"Debe contener faultstring\").to.be.true;\r\n});\r\n\r\n// 3. Validar que NO se devuelve un resultado numerico (error esperado).\r\npm.test(\"No se devuelve DivideResult en caso de error\", function () {\r\n    const xmlBody = pm.response.text();\r\n    const divideResultMatch = xmlBody.match(/<DivideResult>(\\d+)<\\/DivideResult>/);\r\n    pm.expect(divideResultMatch, \"No debe devolver DivideResult en division por cero\").to.be.null;\r\n});"
+                  "// 1. Validar que el servicio responde con status 500 (error interno).\r\npm.test(\"Status code es 500 - Error interno del servidor\", function () {\r\n    pm.response.to.have.status(500);\r\n});\r\n\r\n// 2. Validar que la respuesta es XML.\r\npm.test(\"La respuesta es XML\", function () {\r\n    pm.expect(pm.response.headers.get(\"content-type\")).to.include(\"xml\");\r\n});\r\n\r\n// 3. Validar que la respuesta contiene faultstring.\r\npm.test(\"La respuesta contiene faultstring\", function () {\r\n    const xmlBody = pm.response.text();\r\n    const hasFault = xmlBody.includes(\"faultstring\") || xmlBody.includes(\"Fault\");\r\n    pm.expect(hasFault, \"Debe contener faultstring\").to.be.true;\r\n});\r\n\r\n// 4. Validar que NO se devuelve DivideResult (error esperado).\r\npm.test(\"No se devuelve DivideResult en caso de error\", function () {\r\n    const xmlBody = pm.response.text();\r\n    const divideResultMatch = xmlBody.match(/<DivideResult>(\\d+)<\\/DivideResult>/);\r\n    pm.expect(divideResultMatch, \"No debe devolver DivideResult en division por cero\").to.be.null;\r\n});"
                 ]
               }
             }
@@ -678,9 +678,9 @@
             {
               "name": "divide-by-zero",
               "_postman_previewlanguage": "xml",
-              "code": 200,
-              "status": "OK",
-              "body": "<?xml version=\"1.0\" encoding=\"utf-8\"?><soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"><soap:Body><soap:Fault><faultcode>soap:Server</faultcode><faultstring>Attempted to divide by zero.</faultstring></soap:Fault></soap:Body></soap:Envelope>"
+              "code": 500,
+              "status": "Internal Server Error",
+              "body": "<?xml version=\"1.0\" encoding=\"utf-8\"?><soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"><soap:Body><soap:Fault><faultcode>soap:Server</faultcode><faultstring>Server was unable to process request. ---&gt; System.OverflowException: Arithmetic operation resulted in an overflow. at Calculator.Divide(Int32 intA, Int32 intB) in G:\\PleskVhosts\\dneonline.com\\httpdocs\\Calculator.asmx:line 19</faultstring></soap:Fault></soap:Body></soap:Envelope>"
             }
           ]
         }
